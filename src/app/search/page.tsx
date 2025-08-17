@@ -16,6 +16,7 @@ import { SearchResult } from '@/lib/types';
 import { yellowWords } from '@/lib/yellow';
 
 import PageLayout from '@/components/PageLayout';
+import RecommendationPanel from '@/components/RecommendationPanel';
 import VideoCard from '@/components/VideoCard';
 
 function SearchPageClient() {
@@ -416,6 +417,8 @@ export default function SearchPage() {
   return (
     <Suspense>
       <SearchPageClient />
+      {/* 添加推荐影片面板 */}
+      <RecommendationPanel />
     </Suspense>
   );
 }
