@@ -2,174 +2,115 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-retro-bg text-retro-text font-mono;
+    /* 20px 的工程网格背景 */
+    background-size: 20px 20px;
+    background-image: 
+      linear-gradient(to right, #111 1px, transparent 1px),
+      linear-gradient(to bottom, #111 1px, transparent 1px);
+  }
+}
+
 @layer utilities {
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-
   .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: none;
+  }
+  
+  /* 机械风格边框：无阴影，纯实线 */
+  .border-retro {
+    @apply border border-retro-border;
+  }
+  
+  /* 文本辉光：模仿老式荧光屏 */
+  .text-glow {
+    text-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
   }
 }
 
 :root {
-  --foreground-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 176, 0; /* 琥珀色 */
 }
 
 html,
 body {
   height: 100%;
   overflow-x: hidden;
-  /* 阻止 iOS Safari 拉动回弹 */
   overscroll-behavior: none;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-}
-
+/* 强制深色模式视觉 */
 html:not(.dark) body {
-  background: linear-gradient(
-    180deg,
-    #e6f3fb 0%,
-    #eaf3f7 18%,
-    #f7f7f3 38%,
-    #e9ecef 60%,
-    #dbe3ea 80%,
-    #d3dde6 100%
-  );
-  background-attachment: fixed;
+  background-color: #050505;
+  color: #ffb000;
 }
 
-/* 自定义滚动条样式 */
+/* 机械风格滚动条：方块、无圆角 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(31, 41, 55, 0.1);
+  background: #000;
+  border-left: 1px solid #333;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(75, 85, 99, 0.3);
-  border-radius: 4px;
+  background: #b36e00;
+  border: 2px solid #000; /* 形成像素块感 */
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.5);
+  background: #ffb000;
 }
 
-/* 视频卡片悬停效果 */
-.video-card-hover {
-  transition: transform 0.3s ease;
-}
-
-.video-card-hover:hover {
-  transform: scale(1.05);
-}
-
-/* 渐变遮罩 */
-.gradient-overlay {
+/* 全局 CRT 扫描线覆盖层 */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.8) 100%
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.2) 50%,
+    rgba(0,0,0,0.2)
   );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
 }
 
-/* 隐藏移动端（<768px）垂直滚动条 */
-@media (max-width: 767px) {
-  html,
-  body {
-    -ms-overflow-style: none; /* IE & Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar {
-    display: none; /* Chrome Safari */
-  }
-}
-
-/* 隐藏所有滚动条（兼容 WebKit、Firefox、IE/Edge） */
+/* 移除所有圆角，强制直角 */
 * {
-  -ms-overflow-style: none; /* IE & Edge */
-  scrollbar-width: none; /* Firefox */
+  border-radius: 0 !important;
 }
 
-*::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-/* View Transitions API 动画 */
-@keyframes slide-from-top {
-  from {
-    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-  }
-  to {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  }
-}
-
-@keyframes slide-from-bottom {
-  from {
-    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-  }
-  to {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  }
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.8s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  animation-fill-mode: both;
-}
-
-/*
-  切换时，旧的视图不应该有动画，它应该在下面，等待被新的视图覆盖。
-  这可以防止在动画完成前，页面底部提前变色。
-*/
-::view-transition-old(root) {
-  animation: none;
-}
-
-/* 从浅色到深色：新内容（深色）从顶部滑入 */
-html.dark::view-transition-new(root) {
-  animation-name: slide-from-top;
-}
-
-/* 从深色到浅色：新内容（浅色）从底部滑入 */
-html:not(.dark)::view-transition-new(root) {
-  animation-name: slide-from-bottom;
-}
-
-/* 强制播放器内部的 video 元素高度为 100%，并保持内容完整显示 */
 div[data-media-provider] video {
   height: 100%;
   object-fit: contain;
 }
 
 .art-poster {
-  background-size: contain !important; /* 使图片完整展示 */
-  background-position: center center !important; /* 居中显示 */
-  background-repeat: no-repeat !important; /* 防止重复 */
-  background-color: #000 !important; /* 其余区域填充为黑色 */
+  background-size: contain !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-color: #000 !important;
 }
 
-/* 隐藏移动端竖屏时的 pip 按钮 */
 @media (max-width: 768px) {
-  .art-control-pip {
-    display: none !important;
-  }
-
-  .art-control-fullscreenWeb {
-    display: none !important;
-  }
-
+  .art-control-pip,
+  .art-control-fullscreenWeb,
   .art-control-volume {
     display: none !important;
   }
