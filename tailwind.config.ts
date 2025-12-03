@@ -16,73 +16,69 @@ const config: Config = {
         },
       },
       fontFamily: {
-        primary: ['Inter', ...defaultTheme.fontFamily.sans],
+        // 强制使用等宽字体作为主字体，营造终端代码感
+        sans: ['"Courier New"', 'Courier', 'monospace', ...defaultTheme.fontFamily.sans],
+        mono: ['"Courier New"', 'Courier', 'monospace'],
+        primary: ['"Courier New"', 'Courier', 'monospace'],
       },
       colors: {
+        // 复古终端配色方案
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50: '#fffbea',
+          100: '#fff0c2',
+          200: '#ffe08a',
+          300: '#ffc84d',
+          400: '#ffb000', // 核心琥珀色
+          500: '#e69500',
+          600: '#b36e00',
+          700: '#8c5200',
+          800: '#663a00',
+          900: '#402300',
         },
-        dark: '#222222',
-      },
-      keyframes: {
-        flicker: {
-          '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': {
-            opacity: '0.99',
-            filter:
-              'drop-shadow(0 0 1px rgba(252, 211, 77)) drop-shadow(0 0 15px rgba(245, 158, 11)) drop-shadow(0 0 1px rgba(252, 211, 77))',
-          },
-          '20%, 21.999%, 63%, 63.999%, 65%, 69.999%': {
-            opacity: '0.4',
-            filter: 'none',
-          },
+        retro: {
+          bg: '#050505',       // 纯黑略带灰
+          surface: '#111111',  // 控件背景
+          border: '#333333',   // 机械边框
+          text: '#ffb000',     // 荧光字
+          dim: '#664400',      // 暗淡状态
+          grid: '#1a1a1a',     // 背景网格线
         },
-        shimmer: {
-          '0%': {
-            backgroundPosition: '-700px 0',
-          },
-          '100%': {
-            backgroundPosition: '700px 0',
-          },
-        },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideDown: {
-          '0%': { transform: 'translateY(-10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideInFromRight: {
-          '0%': { transform: 'translateX(100%)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
-        },
-      },
-      animation: {
-        flicker: 'flicker 3s linear infinite',
-        shimmer: 'shimmer 1.3s linear infinite',
-        'fade-in': 'fadeIn 0.3s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-in-out',
-        'slide-down': 'slideDown 0.3s ease-in-out',
-        'slide-in-from-right': 'slideInFromRight 0.3s ease-out',
+        dark: '#050505',
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        // 细微的网格背景，模拟工程图纸或老式UI背景
+        'grid-pattern': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)",
       },
+      keyframes: {
+        // CRT 扫描线滚动
+        scanline: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        // 机械式闪烁（非渐变，而是硬切）
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
+        // 启动时的CRT展开效果
+        turnOn: {
+          '0%': { transform: 'scale(1, 0.01)', filter: 'brightness(2)' },
+          '50%': { transform: 'scale(1, 0.05)', filter: 'brightness(2)' },
+          '100%': { transform: 'scale(1, 1)', filter: 'brightness(1)' },
+        }
+      },
+      animation: {
+        scanline: 'scanline 8s linear infinite',
+        blink: 'blink 1s step-end infinite', // step-end 产生机械的开关感
+        'turn-on': 'turnOn 0.2s ease-out forwards',
+      },
+      // 定义机械式过渡：极快，线性
+      transitionDuration: {
+        'mechanic': '75ms',
+      },
+      transitionTimingFunction: {
+        'mechanic': 'linear',
+      }
     },
   },
   plugins: [require('@tailwindcss/forms')],
