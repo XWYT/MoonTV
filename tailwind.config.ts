@@ -16,38 +16,51 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // 强制使用等宽字体作为主字体，营造终端代码感
-        sans: ['"Courier New"', 'Courier', 'monospace', ...defaultTheme.fontFamily.sans],
-        mono: ['"Courier New"', 'Courier', 'monospace'],
-        primary: ['"Courier New"', 'Courier', 'monospace'],
+        // 更接近苹果官方的柔和无衬线字体
+        sans: [
+          '"SF Pro Display"',
+          '"SF Pro Text"',
+          'Inter',
+          'system-ui',
+          ...defaultTheme.fontFamily.sans,
+        ],
+        mono: defaultTheme.fontFamily.mono,
+        primary: [
+          '"SF Pro Display"',
+          '"SF Pro Text"',
+          'Inter',
+          'system-ui',
+          ...defaultTheme.fontFamily.sans,
+        ],
       },
       colors: {
-        // 复古终端配色方案
+        // 柔和的影院式配色方案，结合苹果玻璃质感与 Netflix 红色点缀
         primary: {
-          50: '#fffbea',
-          100: '#fff0c2',
-          200: '#ffe08a',
-          300: '#ffc84d',
-          400: '#ffb000', // 核心琥珀色
-          500: '#e69500',
-          600: '#b36e00',
-          700: '#8c5200',
-          800: '#663a00',
-          900: '#402300',
+          50: '#fff1f3',
+          100: '#ffd9e0',
+          200: '#ffb4c2',
+          300: '#ff829b',
+          400: '#ff5375',
+          500: '#ff2f5f',
+          600: '#e0114a',
+          700: '#c0063c',
+          800: '#970632',
+          900: '#7d052b',
         },
         retro: {
-          bg: '#050505',       // 纯黑略带灰
-          surface: '#111111',  // 控件背景
-          border: '#333333',   // 机械边框
-          text: '#ffb000',     // 荧光字
-          dim: '#664400',      // 暗淡状态
-          grid: '#1a1a1a',     // 背景网格线
+          bg: '#080b11', // 深邃背景
+          surface: '#0f131b', // 玻璃面板底色
+          border: '#1f2633', // 柔和描边
+          text: '#f5f7fb', // 高对比白
+          dim: '#b8becf', // 次级文字
+          grid: '#111827',
         },
-        dark: '#050505',
+        dark: '#080b11',
       },
       backgroundImage: {
-        // 细微的网格背景，模拟工程图纸或老式UI背景
-        'grid-pattern': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)",
+        // 微光渐变，营造影院级氛围
+        aurora:
+          'radial-gradient(circle at 20% 20%, rgba(255, 83, 117, 0.18), transparent 30%), radial-gradient(circle at 80% 0%, rgba(88, 111, 255, 0.14), transparent 32%), linear-gradient(135deg, #0b0f16 0%, #090c12 60%, #0a0c10 100%)',
       },
       keyframes: {
         // CRT 扫描线滚动
@@ -65,7 +78,7 @@ const config: Config = {
           '0%': { transform: 'scale(1, 0.01)', filter: 'brightness(2)' },
           '50%': { transform: 'scale(1, 0.05)', filter: 'brightness(2)' },
           '100%': { transform: 'scale(1, 1)', filter: 'brightness(1)' },
-        }
+        },
       },
       animation: {
         scanline: 'scanline 8s linear infinite',
@@ -74,11 +87,11 @@ const config: Config = {
       },
       // 定义机械式过渡：极快，线性
       transitionDuration: {
-        'mechanic': '75ms',
+        mechanic: '75ms',
       },
       transitionTimingFunction: {
-        'mechanic': 'linear',
-      }
+        mechanic: 'linear',
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],
