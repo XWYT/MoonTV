@@ -169,17 +169,17 @@ function HomeClient() {
           />
         </div>
 
-        <div className='max-w-[95%] mx-auto'>
+        <div className='max-w-[95%] mx-auto space-y-8'>
           {activeTab === 'favorites' ? (
             // 收藏夹视图
-            <section className='mb-8'>
-              <div className='mb-4 flex items-center justify-between'>
-                <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
+            <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
+              <div className='mb-6 flex items-center justify-between'>
+                <h2 className='text-xl font-semibold text-ink-50 tracking-tight'>
                   我的收藏
                 </h2>
                 {favoriteItems.length > 0 && (
                   <button
-                    className='text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    className='text-sm text-ink-200/80 hover:text-ink-50 transition-colors'
                     onClick={async () => {
                       await clearAllFavorites();
                       setFavoriteItems([]);
@@ -189,9 +189,9 @@ function HomeClient() {
                   </button>
                 )}
               </div>
-              <div className='justify-start grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
+              <div className='justify-start items-stretch grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
                 {favoriteItems.map((item) => (
-                  <div key={item.id + item.source} className='w-full'>
+                  <div key={item.id + item.source} className='w-full h-full'>
                     <VideoCard
                       query={item.search_title}
                       {...item}
@@ -201,7 +201,7 @@ function HomeClient() {
                   </div>
                 ))}
                 {favoriteItems.length === 0 && (
-                  <div className='col-span-full text-center text-gray-500 py-8 dark:text-gray-400'>
+                  <div className='col-span-full text-center text-white/60 py-8'>
                     暂无收藏内容
                   </div>
                 )}
@@ -211,17 +211,17 @@ function HomeClient() {
             // 首页视图
             <>
               {/* 继续观看 */}
-              <ContinueWatching />
+              <ContinueWatching className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10' />
 
               {/* 热门电影 */}
-              <section className='mb-8'>
+              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
                 <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
+                  <h2 className='text-xl font-semibold text-ink-50'>
                     热门电影
                   </h2>
                   <Link
                     href='/douban?type=movie'
-                    className='flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    className='flex items-center text-sm text-ink-200/80 hover:text-ink-50'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -245,7 +245,7 @@ function HomeClient() {
                       hotMovies.map((movie, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44 h-full'
                         >
                           <VideoCard
                             from='douban'
@@ -262,14 +262,14 @@ function HomeClient() {
               </section>
 
               {/* 热门剧集 */}
-              <section className='mb-8'>
+              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
                 <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
+                  <h2 className='text-xl font-semibold text-ink-50'>
                     热门剧集
                   </h2>
                   <Link
                     href='/douban?type=tv'
-                    className='flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    className='flex items-center text-sm text-ink-200/80 hover:text-ink-50'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -293,7 +293,7 @@ function HomeClient() {
                       hotTvShows.map((show, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44 h-full'
                         >
                           <VideoCard
                             from='douban'
@@ -309,14 +309,14 @@ function HomeClient() {
               </section>
 
               {/* 热门综艺 */}
-              <section className='mb-8'>
+              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
                 <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
+                  <h2 className='text-xl font-semibold text-ink-50'>
                     热门综艺
                   </h2>
                   <Link
                     href='/douban?type=show'
-                    className='flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                    className='flex items-center text-sm text-ink-200/80 hover:text-ink-50'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -340,7 +340,7 @@ function HomeClient() {
                       hotVarietyShows.map((show, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44 h-full'
                         >
                           <VideoCard
                             from='douban'
@@ -360,32 +360,27 @@ function HomeClient() {
       </div>
       {announcement && showAnnouncement && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm dark:bg-black/70 p-4 transition-opacity duration-300 ${
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm dark:bg-black/80 p-4 transition-opacity duration-300 ${
             showAnnouncement ? '' : 'opacity-0 pointer-events-none'
           }`}
         >
-          <div className='w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900 transform transition-all duration-300 hover:shadow-2xl'>
+          <div className='w-full max-w-md rounded-3xl bg-retro-surface/90 backdrop-blur-2xl p-6 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] border border-retro-border/60'>
             <div className='flex justify-between items-start mb-4'>
-              <h3 className='text-2xl font-bold tracking-tight text-gray-800 dark:text-white border-b border-green-500 pb-1'>
+              <h3 className='text-2xl font-semibold tracking-tight text-ink-50'>
                 提示
               </h3>
-              <button
-                onClick={() => handleCloseAnnouncement(announcement)}
-                className='text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white transition-colors'
-                aria-label='关闭'
-              ></button>
             </div>
             <div className='mb-6'>
-              <div className='relative overflow-hidden rounded-lg mb-4 bg-green-50 dark:bg-green-900/20'>
-                <div className='absolute inset-y-0 left-0 w-1.5 bg-green-500 dark:bg-green-400'></div>
-                <p className='ml-4 text-gray-600 dark:text-gray-300 leading-relaxed'>
+              <div className='relative overflow-hidden rounded-2xl mb-4 bg-ink-900/60 border border-retro-border/60 p-4'>
+                <div className='absolute inset-y-0 left-0 w-1.5 bg-primary-500'></div>
+                <p className='ml-4 text-ink-50/90 leading-relaxed'>
                   {announcement}
                 </p>
               </div>
             </div>
             <button
               onClick={() => handleCloseAnnouncement(announcement)}
-              className='w-full rounded-lg bg-gradient-to-r from-green-600 to-green-700 px-4 py-3 text-white font-medium shadow-md hover:shadow-lg hover:from-green-700 hover:to-green-800 dark:from-green-600 dark:to-green-700 dark:hover:from-green-700 dark:hover:to-green-800 transition-all duration-300 transform hover:-translate-y-0.5'
+              className='w-full rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-ink-50 font-medium shadow-[0_20px_40px_-25px_rgba(229,9,20,0.7)] transition-transform duration-300 hover:-translate-y-0.5'
             >
               我知道了
             </button>
