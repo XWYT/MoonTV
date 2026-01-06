@@ -4,12 +4,11 @@
 
 @layer base {
   body {
-    @apply bg-retro-bg text-retro-text font-mono;
-    /* 20px 的工程网格背景 */
-    background-size: 20px 20px;
-    background-image: 
-      linear-gradient(to right, #111 1px, transparent 1px),
-      linear-gradient(to bottom, #111 1px, transparent 1px);
+    @apply bg-retro-bg text-gray-100 font-sans antialiased;
+    background-image: theme('backgroundImage.aurora');
+    background-attachment: fixed;
+    background-size: cover;
+    color: #e6e9f2;
   }
 }
 
@@ -21,20 +20,14 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
-  /* 机械风格边框：无阴影，纯实线 */
-  .border-retro {
-    @apply border border-retro-border;
-  }
-  
-  /* 文本辉光：模仿老式荧光屏 */
-  .text-glow {
-    text-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
-  }
-}
 
-:root {
-  --foreground-rgb: 255, 176, 0; /* 琥珀色 */
+  .glass-panel {
+    @apply bg-white/5 dark:bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_-24px_rgba(0,0,0,0.6)];
+  }
+
+  .elevated {
+    @apply shadow-[0_18px_40px_-28px_rgba(0,0,0,0.55)];
+  }
 }
 
 html,
@@ -44,56 +37,32 @@ body {
   overscroll-behavior: none;
 }
 
-/* 强制深色模式视觉 */
-html:not(.dark) body {
-  background-color: #050505;
-  color: #ffb000;
-}
-
-/* 机械风格滚动条：方块、无圆角 */
+/* 极简圆角滚动条 */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
-  border-left: 1px solid #333;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #b36e00;
-  border: 2px solid #000; /* 形成像素块感 */
-  border-radius: 0px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 83, 117, 0.5),
+    rgba(255, 47, 95, 0.4)
+  );
+  border-radius: 999px;
+  border: 2px solid rgba(8, 11, 17, 0.6);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffb000;
-}
-
-/* 全局 CRT 扫描线覆盖层 */
-.scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
   background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0) 50%,
-    rgba(0,0,0,0.2) 50%,
-    rgba(0,0,0,0.2)
+    180deg,
+    rgba(255, 83, 117, 0.8),
+    rgba(255, 47, 95, 0.6)
   );
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.3;
-}
-
-/* 移除所有圆角，强制直角 */
-* {
-  border-radius: 0 !important;
 }
 
 div[data-media-provider] video {

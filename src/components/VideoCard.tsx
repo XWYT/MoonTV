@@ -65,7 +65,7 @@ export default function VideoCard({
 
   // ... (Calculation logic omitted, assume same as original)
   const aggregateData = useMemo(() => {
-     if (!isAggregate || !items) return null;
+    if (!isAggregate || !items) return null;
     const countMap = new Map<string | number, number>();
     const episodeCountMap = new Map<number, number>();
     items.forEach((item) => {
@@ -77,11 +77,16 @@ export default function VideoCard({
         episodeCountMap.set(len, (episodeCountMap.get(len) || 0) + 1);
       }
     });
-    const getMostFrequent = <T extends string | number>(map: Map<T, number>) => {
+    const getMostFrequent = <T extends string | number>(
+      map: Map<T, number>
+    ) => {
       let maxCount = 0;
       let result: T | undefined;
       map.forEach((cnt, key) => {
-        if (cnt > maxCount) { maxCount = cnt; result = key; }
+        if (cnt > maxCount) {
+          maxCount = cnt;
+          result = key;
+        }
       });
       return result;
     };
@@ -96,11 +101,17 @@ export default function VideoCard({
   const actualPoster = aggregateData?.first.poster ?? poster;
   const actualSource = aggregateData?.first.source ?? source;
   const actualId = aggregateData?.first.id ?? id;
-  const actualDoubanId = String(aggregateData?.mostFrequentDoubanId ?? douban_id);
+  const actualDoubanId = String(
+    aggregateData?.mostFrequentDoubanId ?? douban_id
+  );
   const actualEpisodes = aggregateData?.mostFrequentEpisodes ?? episodes;
   const actualYear = aggregateData?.first.year ?? year;
   const actualQuery = query || '';
-  const actualSearchType = isAggregate ? (aggregateData?.first.episodes?.length === 1 ? 'movie' : 'tv') : type;
+  const actualSearchType = isAggregate
+    ? aggregateData?.first.episodes?.length === 1
+      ? 'movie'
+      : 'tv'
+    : type;
 
   useEffect(() => {
     if (from === 'douban' || !actualSource || !actualId) return;
@@ -108,151 +119,254 @@ export default function VideoCard({
       try {
         const fav = await isFavorited(actualSource, actualId);
         setFavorited(fav);
-      } catch (err) { throw new Error('检查收藏状态失败'); }
+      } catch (err) {
+        throw new Error('检查收藏状态失败');
+      }
     };
     fetchFavoriteStatus();
     const storageKey = generateStorageKey(actualSource, actualId);
-    const unsubscribe = subscribeToDataUpdates('favoritesUpdated', (newFavorites: Record<string, any>) => {
-      const isNowFavorited = !!newFavorites[storageKey];
-      setFavorited(isNowFavorited);
-    });
+    const unsubscribe = subscribeToDataUpdates(
+      'favoritesUpdated',
+      (newFavorites: Record<string, any>) => {
+        const isNowFavorited = !!newFavorites[storageKey];
+        setFavorited(isNowFavorited);
+      }
+    );
     return unsubscribe;
   }, [from, actualSource, actualId]);
 
-  const handleToggleFavorite = useCallback(async (e: React.MouseEvent) => {
-    e.preventDefault(); e.stopPropagation();
-    if (from === 'douban' || !actualSource || !actualId) return;
-    try {
-      if (favorited) {
-        await deleteFavorite(actualSource, actualId);
-        setFavorited(false);
-      } else {
-        await saveFavorite(actualSource, actualId, {
-          title: actualTitle,
-          source_name: source_name || '',
-          year: actualYear || '',
-          cover: actualPoster,
-          total_episodes: actualEpisodes ?? 1,
-          save_time: Date.now(),
-        });
-        setFavorited(true);
+  const handleToggleFavorite = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (from === 'douban' || !actualSource || !actualId) return;
+      try {
+        if (favorited) {
+          await deleteFavorite(actualSource, actualId);
+          setFavorited(false);
+        } else {
+          await saveFavorite(actualSource, actualId, {
+            title: actualTitle,
+            source_name: source_name || '',
+            year: actualYear || '',
+            cover: actualPoster,
+            total_episodes: actualEpisodes ?? 1,
+            save_time: Date.now(),
+          });
+          setFavorited(true);
+        }
+      } catch (err) {
+        throw new Error('切换收藏状态失败');
       }
-    } catch (err) { throw new Error('切换收藏状态失败'); }
-  }, [from, actualSource, actualId, actualTitle, source_name, actualYear, actualPoster, actualEpisodes, favorited]);
+    },
+    [
+      from,
+      actualSource,
+      actualId,
+      actualTitle,
+      source_name,
+      actualYear,
+      actualPoster,
+      actualEpisodes,
+      favorited,
+    ]
+  );
 
-  const handleDeleteRecord = useCallback(async (e: React.MouseEvent) => {
-    e.preventDefault(); e.stopPropagation();
-    if (from !== 'playrecord' || !actualSource || !actualId) return;
-    try {
-      await deletePlayRecord(actualSource, actualId);
-      onDelete?.();
-    } catch (err) { throw new Error('删除播放记录失败'); }
-  }, [from, actualSource, actualId, onDelete]);
+  const handleDeleteRecord = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (from !== 'playrecord' || !actualSource || !actualId) return;
+      try {
+        await deletePlayRecord(actualSource, actualId);
+        onDelete?.();
+      } catch (err) {
+        throw new Error('删除播放记录失败');
+      }
+    },
+    [from, actualSource, actualId, onDelete]
+  );
 
   const handleClick = useCallback(() => {
-     if (from === 'douban') {
-      router.push(`/play?title=${encodeURIComponent(actualTitle.trim())}${actualYear ? `&year=${actualYear}` : ''}${actualSearchType ? `&stype=${actualSearchType}` : ''}`);
+    if (from === 'douban') {
+      router.push(
+        `/play?title=${encodeURIComponent(actualTitle.trim())}${
+          actualYear ? `&year=${actualYear}` : ''
+        }${actualSearchType ? `&stype=${actualSearchType}` : ''}`
+      );
     } else if (actualSource && actualId) {
-      router.push(`/play?source=${actualSource}&id=${actualId}&title=${encodeURIComponent(actualTitle)}${actualYear ? `&year=${actualYear}` : ''}${isAggregate ? '&prefer=true' : ''}${actualQuery ? `&stitle=${encodeURIComponent(actualQuery.trim())}` : ''}${actualSearchType ? `&stype=${actualSearchType}` : ''}`);
+      router.push(
+        `/play?source=${actualSource}&id=${actualId}&title=${encodeURIComponent(
+          actualTitle
+        )}${actualYear ? `&year=${actualYear}` : ''}${
+          isAggregate ? '&prefer=true' : ''
+        }${
+          actualQuery ? `&stitle=${encodeURIComponent(actualQuery.trim())}` : ''
+        }${actualSearchType ? `&stype=${actualSearchType}` : ''}`
+      );
     }
-  }, [from, actualSource, actualId, router, actualTitle, actualYear, isAggregate, actualQuery, actualSearchType]);
+  }, [
+    from,
+    actualSource,
+    actualId,
+    router,
+    actualTitle,
+    actualYear,
+    isAggregate,
+    actualQuery,
+    actualSearchType,
+  ]);
 
   const config = useMemo(() => {
-     const configs = {
-      playrecord: { showSourceName: true, showProgress: true, showPlayButton: true, showHeart: true, showCheckCircle: true, showDoubanLink: false, showRating: false },
-      favorite: { showSourceName: true, showProgress: false, showPlayButton: true, showHeart: true, showCheckCircle: false, showDoubanLink: false, showRating: false },
-      search: { showSourceName: true, showProgress: false, showPlayButton: true, showHeart: !isAggregate, showCheckCircle: false, showDoubanLink: !!actualDoubanId, showRating: false },
-      douban: { showSourceName: false, showProgress: false, showPlayButton: true, showHeart: false, showCheckCircle: false, showDoubanLink: true, showRating: !!rate },
+    const configs = {
+      playrecord: {
+        showSourceName: true,
+        showProgress: true,
+        showPlayButton: true,
+        showHeart: true,
+        showCheckCircle: true,
+        showDoubanLink: false,
+        showRating: false,
+      },
+      favorite: {
+        showSourceName: true,
+        showProgress: false,
+        showPlayButton: true,
+        showHeart: true,
+        showCheckCircle: false,
+        showDoubanLink: false,
+        showRating: false,
+      },
+      search: {
+        showSourceName: true,
+        showProgress: false,
+        showPlayButton: true,
+        showHeart: !isAggregate,
+        showCheckCircle: false,
+        showDoubanLink: !!actualDoubanId,
+        showRating: false,
+      },
+      douban: {
+        showSourceName: false,
+        showProgress: false,
+        showPlayButton: true,
+        showHeart: false,
+        showCheckCircle: false,
+        showDoubanLink: true,
+        showRating: !!rate,
+      },
     };
     return configs[from] || configs.search;
   }, [from, isAggregate, actualDoubanId, rate]);
 
   return (
-    // 修改：外层容器去圆角，增加边框，动画改为 mechanic (快速线性)
     <div
-      className='group relative w-full bg-retro-surface cursor-pointer border-2 border-transparent hover:border-retro-text transition-colors duration-mechanic ease-mechanic hover:z-[500]'
+      className='group relative w-full cursor-pointer overflow-hidden rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_25px_50px_-30px_rgba(0,0,0,0.75)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]'
       onClick={handleClick}
     >
-      {/* 海报容器：去圆角 */}
-      <div className='relative aspect-[2/3] overflow-hidden bg-retro-dim'>
+      <div className='relative aspect-[2/3] overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800/50 via-slate-900/40 to-black'>
         {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
         <Image
           src={processImageUrl(actualPoster)}
           alt={actualTitle}
           fill
-          className='object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-mechanic grayscale group-hover:grayscale-0' // 默认黑白，悬停彩色
+          className='object-cover transition duration-500 ease-out scale-105 group-hover:scale-110 group-hover:saturate-125'
           referrerPolicy='no-referrer'
           onLoadingComplete={() => setIsLoading(true)}
         />
 
-        {/* 悬浮遮罩：改为网格或扫描线，而非渐变 */}
-        <div className='absolute inset-0 bg-retro-bg/50 opacity-0 group-hover:opacity-0 transition-opacity duration-mechanic' />
+        <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent' />
 
-        {/* 播放按钮：居中，硬朗风格 */}
         {config.showPlayButton && (
-          <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-mechanic'>
-            <div className="bg-retro-bg border-2 border-retro-text p-2">
-                <Play size={40} className='text-retro-text fill-retro-text' />
+          <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+            <div className='h-14 w-14 rounded-full bg-white/15 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-[0_20px_40px_-25px_rgba(0,0,0,0.8)]'>
+              <Play size={28} className='text-white drop-shadow' />
             </div>
           </div>
         )}
 
-        {/* 右上角标签：去圆角，高对比 */}
         {config.showRating && rate && (
-          <div className='absolute top-0 right-0 bg-retro-text text-black text-xs font-bold w-auto px-2 py-1 border-b-2 border-l-2 border-black'>
-            RATING: {rate}
+          <div className='absolute top-3 right-3 rounded-full bg-gradient-to-r from-primary-500/90 to-primary-600/90 text-xs font-semibold text-white px-3 py-1 shadow-[0_12px_30px_-18px_rgba(255,47,95,0.8)]'>
+            {rate} / 10
           </div>
         )}
 
         {actualEpisodes && actualEpisodes > 1 && (
-          <div className='absolute top-0 left-0 bg-retro-primary-600 text-white text-xs font-mono px-2 py-1 border-b-2 border-r-2 border-black'>
-            EP.{currentEpisode ? `${currentEpisode}/${actualEpisodes}` : actualEpisodes}
+          <div className='absolute top-3 left-3 rounded-full bg-white/15 backdrop-blur-xl text-[10px] font-semibold uppercase tracking-[0.08em] text-white px-3 py-1 border border-white/20'>
+            EP{' '}
+            {currentEpisode
+              ? `${currentEpisode}/${actualEpisodes}`
+              : actualEpisodes}
           </div>
         )}
 
-        {/* 底部操作栏 */}
-        <div className="absolute bottom-0 right-0 p-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-mechanic bg-black/80 w-full justify-end border-t border-retro-text">
+        <div className='absolute bottom-0 right-0 left-0 p-3 flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+          <div className='flex items-center gap-3 rounded-full bg-black/40 backdrop-blur-xl px-3 py-2 border border-white/10'>
             {config.showCheckCircle && (
-                <CheckSquare onClick={handleDeleteRecord} size={18} className="text-retro-text hover:text-white cursor-pointer" />
+              <CheckSquare
+                onClick={handleDeleteRecord}
+                size={18}
+                className='text-white/80 hover:text-white transition-colors'
+              />
             )}
             {config.showHeart && (
-                <Heart onClick={handleToggleFavorite} size={18} className={favorited ? "fill-retro-text text-retro-text" : "text-retro-text hover:fill-retro-text"} />
+              <Heart
+                onClick={handleToggleFavorite}
+                size={18}
+                className={
+                  favorited
+                    ? 'fill-primary-500 text-primary-300 drop-shadow'
+                    : 'text-white/80 hover:text-primary-200 hover:fill-primary-200'
+                }
+              />
             )}
-             {config.showDoubanLink && actualDoubanId && (
-                <a href={`https://movie.douban.com/subject/${actualDoubanId}`} target='_blank' rel='noopener noreferrer' onClick={(e) => e.stopPropagation()}>
-                    <Link size={18} className="text-retro-text hover:text-white" />
-                </a>
+            {config.showDoubanLink && actualDoubanId && (
+              <a
+                href={`https://movie.douban.com/subject/${actualDoubanId}`}
+                target='_blank'
+                rel='noopener noreferrer'
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Link
+                  size={18}
+                  className='text-white/80 hover:text-primary-200 transition-colors'
+                />
+              </a>
             )}
+          </div>
         </div>
       </div>
 
-      {/* 进度条：机械风格，无圆角 */}
       {config.showProgress && progress !== undefined && (
-        <div className='h-2 w-full bg-retro-dim border-t border-b border-black relative'>
-          <div
-            className='h-full bg-retro-text'
-            style={{ width: `${progress}%` }}
-          />
-           {/* 刻度线装饰 */}
-           <div className="absolute top-0 right-0 w-[1px] h-full bg-black/50" />
+        <div className='px-3 pt-3'>
+          <div className='h-1.5 w-full bg-white/10 rounded-full overflow-hidden'>
+            <div
+              className='h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full'
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
       )}
 
-      {/* 标题部分 */}
-      <div className='p-2 text-left bg-retro-surface border-t border-retro-border'>
-        <div className='relative'>
-          <span className='block text-sm font-bold truncate text-retro-dim group-hover:text-retro-text transition-colors duration-mechanic font-mono uppercase'>
-            {"> "}{actualTitle}
+      <div className='p-4 space-y-2'>
+        <div className='flex items-start justify-between gap-2'>
+          <span className='block text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2'>
+            {actualTitle}
           </span>
+          {actualYear && (
+            <span className='text-[11px] text-white/50 rounded-full bg-white/5 px-2 py-1 border border-white/10 leading-none'>
+              {actualYear}
+            </span>
+          )}
         </div>
         {config.showSourceName && source_name && (
-          <div className='flex justify-between items-center mt-1'>
-            <span className='text-[10px] text-gray-500 uppercase tracking-widest'>
-              [{source_name}]
-            </span>
-            <span className="text-[10px] text-retro-text opacity-0 group-hover:opacity-100">
-                {actualYear}
-            </span>
+          <div className='flex justify-between items-center text-xs text-white/60'>
+            <span className='uppercase tracking-[0.12em]'>{source_name}</span>
+            {actualSearchType && (
+              <span className='px-2 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] tracking-widest'>
+                {actualSearchType === 'tv' ? 'Series' : 'Movie'}
+              </span>
+            )}
           </div>
         )}
       </div>
