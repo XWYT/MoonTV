@@ -261,106 +261,110 @@ export default function VideoCard({
 
   return (
     <div
-      className='group relative w-full h-full cursor-pointer overflow-hidden rounded-3xl bg-retro-surface/90 backdrop-blur-2xl border border-retro-border/60 shadow-[0_25px_50px_-30px_rgba(0,0,0,0.75)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_32px_78px_-30px_rgba(0,0,0,0.85)]'
+      className='group relative w-full cursor-pointer overflow-hidden rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_25px_50px_-30px_rgba(0,0,0,0.75)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]'
       onClick={handleClick}
     >
-      <div className='flex h-full flex-col'>
-        <div className='relative aspect-[2/3] overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900/80 via-ink-900/60 to-ink-900'>
-          {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
-          <Image
-            src={processImageUrl(actualPoster)}
-            alt={actualTitle}
-            fill
-            className='object-cover transition duration-500 ease-out scale-105 group-hover:scale-110 group-hover:saturate-125'
-            referrerPolicy='no-referrer'
-            onLoadingComplete={() => setIsLoading(true)}
-          />
+      <div className='relative aspect-[2/3] overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800/50 via-slate-900/40 to-black'>
+        {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
+        <Image
+          src={processImageUrl(actualPoster)}
+          alt={actualTitle}
+          fill
+          className='object-cover transition duration-500 ease-out scale-105 group-hover:scale-110 group-hover:saturate-125'
+          referrerPolicy='no-referrer'
+          onLoadingComplete={() => setIsLoading(true)}
+        />
 
-          <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent' />
 
-          {config.showPlayButton && (
-            <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-              <div className='h-14 w-14 rounded-full bg-white/15 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-[0_20px_40px_-25px_rgba(0,0,0,0.8)]'>
-                <Play size={28} className='text-white drop-shadow' />
-              </div>
+        {config.showPlayButton && (
+          <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+            <div className='h-14 w-14 rounded-full bg-white/15 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-[0_20px_40px_-25px_rgba(0,0,0,0.8)]'>
+              <Play size={28} className='text-white drop-shadow' />
             </div>
           )}
 
-          {config.showRating && rate && (
-            <div className='absolute top-3 right-3 rounded-full bg-gradient-to-r from-primary-500/90 to-primary-600/90 text-xs font-semibold text-ink-50 px-3 py-1 shadow-[0_12px_30px_-18px_rgba(229,9,20,0.55)]'>
-              {rate} / 10
-            </div>
-          )}
-
-          {actualEpisodes && actualEpisodes > 1 && (
-            <div className='absolute top-3 left-3 rounded-full bg-white/15 backdrop-blur-xl text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-50 px-3 py-1 border border-white/20'>
-              EP{' '}
-              {currentEpisode
-                ? `${currentEpisode}/${actualEpisodes}`
-                : actualEpisodes}
-            </div>
-          )}
-
-          <div className='absolute bottom-0 right-0 left-0 p-3 flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-            <div className='flex items-center gap-3 rounded-full bg-black/35 backdrop-blur-xl px-3 py-2 border border-white/10'>
-              {config.showCheckCircle && (
-                <CheckSquare
-                  onClick={handleDeleteRecord}
-                  size={18}
-                  className='text-ink-50/80 hover:text-ink-50 transition-colors'
-                />
-              )}
-              {config.showHeart && (
-                <Heart
-                  onClick={handleToggleFavorite}
-                  size={18}
-                  className={
-                    favorited
-                      ? 'fill-primary-500 text-primary-300 drop-shadow'
-                      : 'text-ink-50/80 hover:text-primary-200 hover:fill-primary-200'
-                  }
-                />
-              )}
-              {config.showDoubanLink && actualDoubanId && (
-                <a
-                  href={`https://movie.douban.com/subject/${actualDoubanId}`}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Link
-                    size={18}
-                    className='text-ink-50/80 hover:text-primary-200 transition-colors'
-                  />
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {config.showProgress && progress !== undefined && (
-          <div className='px-4 pt-3'>
-            <div className='h-1.5 w-full bg-ink-800/60 rounded-full overflow-hidden'>
-              <div
-                className='h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full'
-                style={{ width: `${progress}%` }}
-              />
-            </div>
+        {config.showRating && rate && (
+          <div className='absolute top-3 right-3 rounded-full bg-gradient-to-r from-primary-500/90 to-primary-600/90 text-xs font-semibold text-white px-3 py-1 shadow-[0_12px_30px_-18px_rgba(255,47,95,0.8)]'>
+            {rate} / 10
           </div>
         )}
 
-        <div className='flex flex-1 flex-col px-4 pb-4 pt-3 gap-3 min-h-[128px]'>
-          <div className='flex items-start justify-between gap-2'>
-            <span className='block text-sm sm:text-[15px] font-semibold text-ink-50 leading-snug line-clamp-2'>
-              {actualTitle}
+        {actualEpisodes && actualEpisodes > 1 && (
+          <div className='absolute top-3 left-3 rounded-full bg-white/15 backdrop-blur-xl text-[10px] font-semibold uppercase tracking-[0.08em] text-white px-3 py-1 border border-white/20'>
+            EP{' '}
+            {currentEpisode
+              ? `${currentEpisode}/${actualEpisodes}`
+              : actualEpisodes}
+          </div>
+        )}
+
+        <div className='absolute bottom-0 right-0 left-0 p-3 flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+          <div className='flex items-center gap-3 rounded-full bg-black/40 backdrop-blur-xl px-3 py-2 border border-white/10'>
+            {config.showCheckCircle && (
+              <CheckSquare
+                onClick={handleDeleteRecord}
+                size={18}
+                className='text-white/80 hover:text-white transition-colors'
+              />
+            )}
+            {config.showHeart && (
+              <Heart
+                onClick={handleToggleFavorite}
+                size={18}
+                className={
+                  favorited
+                    ? 'fill-primary-500 text-primary-300 drop-shadow'
+                    : 'text-white/80 hover:text-primary-200 hover:fill-primary-200'
+                }
+              />
+            )}
+            {config.showDoubanLink && actualDoubanId && (
+              <a
+                href={`https://movie.douban.com/subject/${actualDoubanId}`}
+                target='_blank'
+                rel='noopener noreferrer'
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Link
+                  size={18}
+                  className='text-white/80 hover:text-primary-200 transition-colors'
+                />
+              </a>
+            )}
+          </div>
+        </div>
+
+      {config.showProgress && progress !== undefined && (
+        <div className='px-3 pt-3'>
+          <div className='h-1.5 w-full bg-white/10 rounded-full overflow-hidden'>
+            <div
+              className='h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full'
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className='p-4 space-y-2'>
+        <div className='flex items-start justify-between gap-2'>
+          <span className='block text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2'>
+            {actualTitle}
+          </span>
+          {actualYear && (
+            <span className='text-[11px] text-white/50 rounded-full bg-white/5 px-2 py-1 border border-white/10 leading-none'>
+              {actualYear}
             </span>
-            <span
-              className={`text-[11px] text-ink-200/80 rounded-full bg-ink-900/80 px-2 py-1 border border-ink-800/70 leading-none ${
-                actualYear ? '' : 'opacity-0'
-              }`}
-            >
-              {actualYear || '0000'}
-            </span>
+          )}
+        </div>
+        {config.showSourceName && source_name && (
+          <div className='flex justify-between items-center text-xs text-white/60'>
+            <span className='uppercase tracking-[0.12em]'>{source_name}</span>
+            {actualSearchType && (
+              <span className='px-2 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] tracking-widest'>
+                {actualSearchType === 'tv' ? 'Series' : 'Movie'}
+              </span>
+            )}
           </div>
           <div className='flex justify-between items-center text-[11px] text-ink-200/80 uppercase tracking-[0.14em]'>
             <span className={source_name ? 'truncate' : 'opacity-0'}>

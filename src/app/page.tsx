@@ -172,14 +172,14 @@ function HomeClient() {
         <div className='max-w-[95%] mx-auto space-y-8'>
           {activeTab === 'favorites' ? (
             // 收藏夹视图
-            <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
+            <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
               <div className='mb-6 flex items-center justify-between'>
-                <h2 className='text-xl font-semibold text-ink-50 tracking-tight'>
+                <h2 className='text-xl font-semibold text-white tracking-tight'>
                   我的收藏
                 </h2>
                 {favoriteItems.length > 0 && (
                   <button
-                    className='text-sm text-ink-200/80 hover:text-ink-50 transition-colors'
+                    className='text-sm text-white/70 hover:text-white transition-colors'
                     onClick={async () => {
                       await clearAllFavorites();
                       setFavoriteItems([]);
@@ -214,14 +214,12 @@ function HomeClient() {
               <ContinueWatching className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10' />
 
               {/* 热门电影 */}
-              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
+              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
                 <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-semibold text-ink-50'>
-                    热门电影
-                  </h2>
+                  <h2 className='text-xl font-semibold text-white'>热门电影</h2>
                   <Link
                     href='/douban?type=movie'
-                    className='flex items-center text-sm text-ink-200/80 hover:text-ink-50'
+                    className='flex items-center text-sm text-white/70 hover:text-white'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -262,14 +260,12 @@ function HomeClient() {
               </section>
 
               {/* 热门剧集 */}
-              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
+              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
                 <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-semibold text-ink-50'>
-                    热门剧集
-                  </h2>
+                  <h2 className='text-xl font-semibold text-white'>热门剧集</h2>
                   <Link
                     href='/douban?type=tv'
-                    className='flex items-center text-sm text-ink-200/80 hover:text-ink-50'
+                    className='flex items-center text-sm text-white/70 hover:text-white'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -309,14 +305,12 @@ function HomeClient() {
               </section>
 
               {/* 热门综艺 */}
-              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-retro-border/50'>
+              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
                 <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-semibold text-ink-50'>
-                    热门综艺
-                  </h2>
+                  <h2 className='text-xl font-semibold text-white'>热门综艺</h2>
                   <Link
                     href='/douban?type=show'
-                    className='flex items-center text-sm text-ink-200/80 hover:text-ink-50'
+                    className='flex items-center text-sm text-white/70 hover:text-white'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -364,23 +358,23 @@ function HomeClient() {
             showAnnouncement ? '' : 'opacity-0 pointer-events-none'
           }`}
         >
-          <div className='w-full max-w-md rounded-3xl bg-retro-surface/90 backdrop-blur-2xl p-6 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] border border-retro-border/60'>
+          <div className='w-full max-w-md rounded-3xl bg-white/10 backdrop-blur-2xl p-6 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] border border-white/10'>
             <div className='flex justify-between items-start mb-4'>
-              <h3 className='text-2xl font-semibold tracking-tight text-ink-50'>
+              <h3 className='text-2xl font-semibold tracking-tight text-white'>
                 提示
               </h3>
             </div>
             <div className='mb-6'>
-              <div className='relative overflow-hidden rounded-2xl mb-4 bg-ink-900/60 border border-retro-border/60 p-4'>
+              <div className='relative overflow-hidden rounded-2xl mb-4 bg-white/5 border border-white/10 p-4'>
                 <div className='absolute inset-y-0 left-0 w-1.5 bg-primary-500'></div>
-                <p className='ml-4 text-ink-50/90 leading-relaxed'>
+                <p className='ml-4 text-white/80 leading-relaxed'>
                   {announcement}
                 </p>
               </div>
             </div>
             <button
               onClick={() => handleCloseAnnouncement(announcement)}
-              className='w-full rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-ink-50 font-medium shadow-[0_20px_40px_-25px_rgba(229,9,20,0.7)] transition-transform duration-300 hover:-translate-y-0.5'
+              className='w-full rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-white font-medium shadow-[0_20px_40px_-25px_rgba(255,47,95,0.9)] transition-transform duration-300 hover:-translate-y-0.5'
             >
               我知道了
             </button>

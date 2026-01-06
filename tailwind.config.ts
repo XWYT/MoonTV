@@ -34,45 +34,33 @@ const config: Config = {
         ],
       },
       colors: {
-        // 成熟的影院式配色，结合苹果低饱和质感与 Netflix 式红色点缀
+        // 柔和的影院式配色方案，结合苹果玻璃质感与 Netflix 红色点缀
         primary: {
-          50: '#fff1f2',
-          100: '#ffd7dc',
-          200: '#ffacb9',
-          300: '#ff7a8b',
-          400: '#ff4f66',
-          500: '#e50914',
-          600: '#c40811',
-          700: '#9d0710',
-          800: '#6e040c',
-          900: '#4a0208',
-        },
-        ink: {
-          50: '#f5f7fb',
-          100: '#e8edf5',
-          200: '#cfd7e6',
-          300: '#a9b4c8',
-          400: '#8c95a9',
-          500: '#6d768c',
-          600: '#575f73',
-          700: '#414653',
-          800: '#2b2f39',
-          900: '#181c24',
+          50: '#fff1f3',
+          100: '#ffd9e0',
+          200: '#ffb4c2',
+          300: '#ff829b',
+          400: '#ff5375',
+          500: '#ff2f5f',
+          600: '#e0114a',
+          700: '#c0063c',
+          800: '#970632',
+          900: '#7d052b',
         },
         retro: {
-          bg: '#070a12', // 深邃背景
-          surface: '#0d1220', // 玻璃面板底色
-          border: '#1b2333', // 柔和描边
+          bg: '#080b11', // 深邃背景
+          surface: '#0f131b', // 玻璃面板底色
+          border: '#1f2633', // 柔和描边
           text: '#f5f7fb', // 高对比白
-          dim: '#b6bcc9', // 次级文字
-          grid: '#0b1021',
+          dim: '#b8becf', // 次级文字
+          grid: '#111827',
         },
-        dark: '#05070c',
+        dark: '#080b11',
       },
       backgroundImage: {
         // 微光渐变，营造影院级氛围
         aurora:
-          'radial-gradient(circle at 20% 20%, rgba(229, 9, 20, 0.12), transparent 30%), radial-gradient(circle at 80% 0%, rgba(99, 121, 255, 0.12), transparent 32%), linear-gradient(140deg, #060910 0%, #080c16 55%, #060910 100%)',
+          'radial-gradient(circle at 20% 20%, rgba(255, 83, 117, 0.18), transparent 30%), radial-gradient(circle at 80% 0%, rgba(88, 111, 255, 0.14), transparent 32%), linear-gradient(135deg, #0b0f16 0%, #090c12 60%, #0a0c10 100%)',
       },
       keyframes: {
         // CRT 扫描线滚动

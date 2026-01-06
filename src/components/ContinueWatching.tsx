@@ -88,10 +88,10 @@ export default function ContinueWatching({ className }: ContinueWatchingProps) {
   return (
     <section className={`mb-8 ${className || ''}`}>
       <div className='mb-4 flex items-center justify-between'>
-        <h2 className='text-xl font-semibold text-ink-50'>继续观看</h2>
+        <h2 className='text-xl font-semibold text-white'>继续观看</h2>
         {!loading && playRecords.length > 0 && (
           <button
-            className='text-sm text-ink-200/80 hover:text-ink-50 transition-colors'
+            className='text-sm text-white/70 hover:text-white transition-colors'
             onClick={async () => {
               await clearAllPlayRecords();
               setPlayRecords([]);

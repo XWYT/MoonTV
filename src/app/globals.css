@@ -4,12 +4,11 @@
 
 @layer base {
   body {
-    @apply bg-retro-bg text-ink-50 font-sans antialiased;
+    @apply bg-retro-bg text-gray-100 font-sans antialiased;
     background-image: theme('backgroundImage.aurora');
     background-attachment: fixed;
     background-size: cover;
-    color: #e8edf5;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+    color: #e6e9f2;
   }
 }
 
@@ -23,11 +22,11 @@
   }
 
   .glass-panel {
-    @apply bg-retro-surface/80 backdrop-blur-2xl border border-retro-border/60 shadow-[0_22px_70px_-28px_rgba(0,0,0,0.75)];
+    @apply bg-white/5 dark:bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_-24px_rgba(0,0,0,0.6)];
   }
 
   .elevated {
-    @apply shadow-[0_18px_40px_-28px_rgba(0,0,0,0.6)];
+    @apply shadow-[0_18px_40px_-28px_rgba(0,0,0,0.55)];
   }
 }
 
