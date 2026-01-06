@@ -88,12 +88,10 @@ export default function ContinueWatching({ className }: ContinueWatchingProps) {
   return (
     <section className={`mb-8 ${className || ''}`}>
       <div className='mb-4 flex items-center justify-between'>
-        <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
-          继续观看
-        </h2>
+        <h2 className='text-xl font-semibold text-ink-50'>继续观看</h2>
         {!loading && playRecords.length > 0 && (
           <button
-            className='text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+            className='text-sm text-ink-200/80 hover:text-ink-50 transition-colors'
             onClick={async () => {
               await clearAllPlayRecords();
               setPlayRecords([]);
@@ -124,7 +122,7 @@ export default function ContinueWatching({ className }: ContinueWatchingProps) {
               return (
                 <div
                   key={record.key}
-                  className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                  className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44 h-full'
                 >
                   <VideoCard
                     id={id}

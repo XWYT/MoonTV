@@ -33,9 +33,8 @@ const Logo = () => {
       href='/'
       className='flex items-center justify-center h-16 select-none group'
     >
-      {/* 故障风格 Logo */}
-      <span className='text-2xl font-bold text-retro-text tracking-tighter font-mono border-2 border-transparent group-hover:border-retro-text px-2 uppercase'>
-        {siteName}_
+      <span className='text-2xl font-semibold tracking-tight text-white drop-shadow-sm group-hover:scale-[1.01] transition-transform duration-200'>
+        {siteName}
       </span>
     </Link>
   );
@@ -57,7 +56,10 @@ const Sidebar = ({ onToggle, activePath = '/' }: SidebarProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
-    if (typeof window !== 'undefined' && typeof window.__sidebarCollapsed === 'boolean') {
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.__sidebarCollapsed === 'boolean'
+    ) {
       return window.__sidebarCollapsed;
     }
     return false;
@@ -135,23 +137,19 @@ const Sidebar = ({ onToggle, activePath = '/' }: SidebarProps) => {
       onClick={onClick}
       data-active={isActive}
       className={`
-        group flex items-center px-2 py-3 pl-4 
-        text-gray-500 font-mono text-sm uppercase tracking-wider
-        hover:text-retro-text hover:bg-retro-border/30
-        data-[active=true]:text-retro-bg data-[active=true]:bg-retro-text 
-        data-[active=true]:font-bold
-        transition-all duration-mechanic ease-mechanic
-        border-l-4 border-transparent
-        data-[active=true]:border-l-4 data-[active=true]:border-retro-text
-        ${isCollapsed ? 'justify-center pl-2' : 'justify-start'}
+        group flex items-center px-3 py-3 rounded-2xl
+        text-retro-dim text-xs font-semibold tracking-wide uppercase
+        hover:text-white hover:bg-white/5 hover:shadow-[0_10px_30px_-20px_rgba(0,0,0,0.8)]
+        data-[active=true]:text-white data-[active=true]:bg-white/10 data-[active=true]:border-white/15
+        transition-all duration-200 ease-out
+        border border-transparent
+        ${isCollapsed ? 'justify-center' : 'justify-start'}
       `}
     >
       <div className='w-5 h-5 flex items-center justify-center'>
-        <Icon className='w-4 h-4' />
+        <Icon className='w-5 h-5' />
       </div>
-      {!isCollapsed && (
-        <span className='ml-3 whitespace-nowrap'>{label}</span>
-      )}
+      {!isCollapsed && <span className='ml-3 whitespace-nowrap'>{label}</span>}
     </Link>
   );
 
@@ -160,78 +158,97 @@ const Sidebar = ({ onToggle, activePath = '/' }: SidebarProps) => {
       <div className='hidden md:flex'>
         <aside
           data-sidebar
-          className={`fixed top-0 left-0 h-screen bg-retro-bg border-r border-retro-border z-20 transition-all duration-mechanic ease-linear ${
+          className={`fixed top-0 left-0 h-screen bg-retro-bg/70 backdrop-blur-2xl border-r border-retro-border/60 z-20 transition-all duration-300 ease-out shadow-[0_25px_60px_-35px_rgba(0,0,0,0.8)] ${
             isCollapsed ? 'w-16' : 'w-64'
           }`}
         >
           <div className='flex h-full flex-col'>
             {/* Logo */}
-            <div className='relative h-16 border-b border-retro-border bg-retro-surface'>
-               <div className={`absolute inset-0 flex items-center justify-center ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
-                 {!isCollapsed && <Logo />}
-               </div>
-               {/* 切换按钮：机械风格 */}
+            <div className='relative h-16 border-b border-retro-border/60 bg-white/5'>
+              <div
+                className={`absolute inset-0 flex items-center justify-center ${
+                  isCollapsed ? 'opacity-0' : 'opacity-100'
+                }`}
+              >
+                {!isCollapsed && <Logo />}
+              </div>
+              {/* 切换按钮 */}
               <button
                 onClick={handleToggle}
-                className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center 
-                  border border-retro-border hover:bg-retro-text hover:text-black hover:border-retro-text 
-                  text-retro-text transition-colors duration-mechanic
-                  ${isCollapsed ? 'left-1/2 -translate-x-1/2' : 'right-2'}`}
+                className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-2xl
+                  border border-white/10 bg-white/5 hover:bg-white/15 text-white/80 hover:text-white
+                  transition-all duration-300 shadow-[0_10px_30px_-25px_rgba(0,0,0,0.8)]
+                  ${isCollapsed ? 'left-1/2 -translate-x-1/2' : 'right-3'}`}
               >
                 <Menu className='h-4 w-4' />
               </button>
             </div>
 
             {/* 导航 */}
-            <nav className='flex-1 overflow-y-auto py-4 space-y-1'>
-              <SidebarItem 
-                icon={Home} 
-                label="HOME" 
-                href="/" 
-                onClick={() => setActive('/')} 
-                isActive={active === '/'} 
+            <nav className='flex-1 overflow-y-auto py-4 space-y-2 px-3'>
+              <SidebarItem
+                icon={Home}
+                label='HOME'
+                href='/'
+                onClick={() => setActive('/')}
+                isActive={active === '/'}
               />
-              <SidebarItem 
-                icon={Search} 
-                label="SEARCH" 
-                href="/search" 
-                onClick={(e: any) => { e.preventDefault(); handleSearchClick(); setActive('/search'); }} 
-                isActive={active === '/search'} 
+              <SidebarItem
+                icon={Search}
+                label='SEARCH'
+                href='/search'
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  handleSearchClick();
+                  setActive('/search');
+                }}
+                isActive={active === '/search'}
               />
-              
-              <div className="my-4 border-t border-retro-border mx-4 opacity-50"></div>
+
+              <div className='my-4 border-t border-retro-border mx-4 opacity-50'></div>
 
               {menuItems.map((item) => {
-                 const typeMatch = item.href.match(/type=([^&]+)/)?.[1];
-                 const decodedActive = decodeURIComponent(active);
-                 const isActive = decodedActive === decodeURIComponent(item.href) ||
-                    (decodedActive.startsWith('/douban') && decodedActive.includes(`type=${typeMatch}`));
-                 return (
-                    <SidebarItem 
-                      key={item.label}
-                      icon={item.icon}
-                      label={item.label}
-                      href={item.href}
-                      onClick={() => setActive(item.href)}
-                      isActive={isActive}
-                    />
-                 )
+                const typeMatch = item.href.match(/type=([^&]+)/)?.[1];
+                const decodedActive = decodeURIComponent(active);
+                const isActive =
+                  decodedActive === decodeURIComponent(item.href) ||
+                  (decodedActive.startsWith('/douban') &&
+                    decodedActive.includes(`type=${typeMatch}`));
+                return (
+                  <SidebarItem
+                    key={item.label}
+                    icon={item.icon}
+                    label={item.label}
+                    href={item.href}
+                    onClick={() => setActive(item.href)}
+                    isActive={isActive}
+                  />
+                );
               })}
             </nav>
-            
+
             {/* 底部装饰：系统状态 */}
             {!isCollapsed && (
-                <div className="p-4 border-t border-retro-border text-[10px] text-retro-dim font-mono">
-                    <div className="flex justify-between">
-                        <span>SYS: ONLINE</span>
-                        <span className="animate-pulse">●</span>
-                    </div>
-                    <div className="mt-1">V.1.0.RC</div>
+              <div className='p-4 border-t border-retro-border/60 text-[11px] text-retro-dim tracking-wide'>
+                <div className='flex items-center justify-between'>
+                  <span className='text-white/70'>在线 · 流畅</span>
+                  <span className='inline-flex items-center gap-1 text-primary-300'>
+                    <span className='h-2 w-2 rounded-full bg-primary-400 animate-pulse' />
+                    UHD
+                  </span>
                 </div>
+                <div className='mt-1 text-white/50'>
+                  Version 1.0 · Optimized UI
+                </div>
+              </div>
             )}
           </div>
         </aside>
-        <div className={`transition-all duration-mechanic ease-linear ${isCollapsed ? 'w-16' : 'w-64'}`}></div>
+        <div
+          className={`transition-all duration-mechanic ease-linear ${
+            isCollapsed ? 'w-16' : 'w-64'
+          }`}
+        ></div>
       </div>
     </SidebarContext.Provider>
   );
