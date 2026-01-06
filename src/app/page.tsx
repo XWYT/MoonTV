@@ -189,9 +189,9 @@ function HomeClient() {
                   </button>
                 )}
               </div>
-              <div className='justify-start grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
+              <div className='justify-start items-stretch grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
                 {favoriteItems.map((item) => (
-                  <div key={item.id + item.source} className='w-full'>
+                  <div key={item.id + item.source} className='w-full h-full'>
                     <VideoCard
                       query={item.search_title}
                       {...item}
@@ -243,7 +243,7 @@ function HomeClient() {
                       hotMovies.map((movie, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44 h-full'
                         >
                           <VideoCard
                             from='douban'
@@ -289,7 +289,7 @@ function HomeClient() {
                       hotTvShows.map((show, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44 h-full'
                         >
                           <VideoCard
                             from='douban'
@@ -334,7 +334,7 @@ function HomeClient() {
                       hotVarietyShows.map((show, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44 h-full'
                         >
                           <VideoCard
                             from='douban'
@@ -354,7 +354,7 @@ function HomeClient() {
       </div>
       {announcement && showAnnouncement && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm dark:bg-black/70 p-4 transition-opacity duration-300 ${
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm dark:bg-black/80 p-4 transition-opacity duration-300 ${
             showAnnouncement ? '' : 'opacity-0 pointer-events-none'
           }`}
         >

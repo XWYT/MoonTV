@@ -282,8 +282,7 @@ export default function VideoCard({
             <div className='h-14 w-14 rounded-full bg-white/15 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-[0_20px_40px_-25px_rgba(0,0,0,0.8)]'>
               <Play size={28} className='text-white drop-shadow' />
             </div>
-          </div>
-        )}
+          )}
 
         {config.showRating && rate && (
           <div className='absolute top-3 right-3 rounded-full bg-gradient-to-r from-primary-500/90 to-primary-600/90 text-xs font-semibold text-white px-3 py-1 shadow-[0_12px_30px_-18px_rgba(255,47,95,0.8)]'>
@@ -335,7 +334,6 @@ export default function VideoCard({
             )}
           </div>
         </div>
-      </div>
 
       {config.showProgress && progress !== undefined && (
         <div className='px-3 pt-3'>
@@ -368,7 +366,23 @@ export default function VideoCard({
               </span>
             )}
           </div>
-        )}
+          <div className='flex justify-between items-center text-[11px] text-ink-200/80 uppercase tracking-[0.14em]'>
+            <span className={source_name ? 'truncate' : 'opacity-0'}>
+              {source_name || 'source'}
+            </span>
+            <span
+              className={`px-2 py-1 rounded-full bg-ink-900/70 border border-ink-800/80 text-[10px] tracking-widest ${
+                actualSearchType ? '' : 'opacity-0'
+              }`}
+            >
+              {actualSearchType === 'tv'
+                ? 'Series'
+                : actualSearchType === 'movie'
+                ? 'Movie'
+                : 'Type'}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
