@@ -156,9 +156,9 @@ function HomeClient() {
 
   return (
     <PageLayout>
-      <div className='px-2 sm:px-10 py-4 sm:py-8 overflow-visible'>
+      <div className='px-4 sm:px-10 py-6 sm:py-10 overflow-visible'>
         {/* 顶部 Tab 切换 */}
-        <div className='mb-8 flex justify-center'>
+        <div className='mb-10 flex justify-center'>
           <CapsuleSwitch
             options={[
               { label: '首页', value: 'home' },
@@ -169,17 +169,22 @@ function HomeClient() {
           />
         </div>
 
-        <div className='max-w-[95%] mx-auto space-y-8'>
+        <div className='max-w-[96%] xl:max-w-[1200px] mx-auto space-y-10'>
           {activeTab === 'favorites' ? (
             // 收藏夹视图
-            <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
+            <section className='surface-panel rounded-[28px] p-5 sm:p-7'>
               <div className='mb-6 flex items-center justify-between'>
-                <h2 className='text-xl font-semibold text-white tracking-tight'>
-                  我的收藏
-                </h2>
+                <div>
+                  <h2 className='text-2xl font-semibold text-white tracking-tight'>
+                    我的收藏
+                  </h2>
+                  <p className='text-sm text-white/60 mt-1'>
+                    保存喜欢的片单，随时继续播放。
+                  </p>
+                </div>
                 {favoriteItems.length > 0 && (
                   <button
-                    className='text-sm text-white/70 hover:text-white transition-colors'
+                    className='text-sm text-white/70 hover:text-white transition-colors focus-ring rounded-full px-3 py-1'
                     onClick={async () => {
                       await clearAllFavorites();
                       setFavoriteItems([]);
@@ -189,7 +194,7 @@ function HomeClient() {
                   </button>
                 )}
               </div>
-              <div className='justify-start grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
+              <div className='justify-start grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-[repeat(auto-fill,_minmax(11.5rem,_1fr))] sm:gap-x-8 sm:gap-y-12'>
                 {favoriteItems.map((item) => (
                   <div key={item.id + item.source} className='w-full'>
                     <VideoCard
@@ -201,7 +206,7 @@ function HomeClient() {
                   </div>
                 ))}
                 {favoriteItems.length === 0 && (
-                  <div className='col-span-full text-center text-white/60 py-8'>
+                  <div className='col-span-full text-center text-white/60 py-12'>
                     暂无收藏内容
                   </div>
                 )}
@@ -211,15 +216,22 @@ function HomeClient() {
             // 首页视图
             <>
               {/* 继续观看 */}
-              <ContinueWatching className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10' />
+              <ContinueWatching className='surface-panel rounded-[28px] p-5 sm:p-7' />
 
               {/* 热门电影 */}
-              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
-                <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-semibold text-white'>热门电影</h2>
+              <section className='surface-panel rounded-[28px] p-5 sm:p-7'>
+                <div className='mb-5 flex items-center justify-between'>
+                  <div>
+                    <h2 className='text-2xl font-semibold text-white'>
+                      热门电影
+                    </h2>
+                    <p className='text-sm text-white/60 mt-1'>
+                      本周热度最高的新片与佳作。
+                    </p>
+                  </div>
                   <Link
                     href='/douban?type=movie'
-                    className='flex items-center text-sm text-white/70 hover:text-white'
+                    className='flex items-center text-sm text-white/70 hover:text-white focus-ring rounded-full px-2 py-1'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -231,19 +243,19 @@ function HomeClient() {
                       Array.from({ length: 8 }).map((_, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[110px] w-28 sm:min-w-[200px] sm:w-48'
                         >
-                          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-200 animate-pulse dark:bg-gray-800'>
-                            <div className='absolute inset-0 bg-gray-300 dark:bg-gray-700'></div>
+                          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-2xl bg-white/5 animate-pulse'>
+                            <div className='absolute inset-0 bg-white/10'></div>
                           </div>
-                          <div className='mt-2 h-4 bg-gray-200 rounded animate-pulse dark:bg-gray-800'></div>
+                          <div className='mt-3 h-4 bg-white/10 rounded animate-pulse'></div>
                         </div>
                       ))
                     : // 显示真实数据
                       hotMovies.map((movie, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[110px] w-28 sm:min-w-[200px] sm:w-48'
                         >
                           <VideoCard
                             from='douban'
@@ -260,12 +272,19 @@ function HomeClient() {
               </section>
 
               {/* 热门剧集 */}
-              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
-                <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-semibold text-white'>热门剧集</h2>
+              <section className='surface-panel rounded-[28px] p-5 sm:p-7'>
+                <div className='mb-5 flex items-center justify-between'>
+                  <div>
+                    <h2 className='text-2xl font-semibold text-white'>
+                      热门剧集
+                    </h2>
+                    <p className='text-sm text-white/60 mt-1'>
+                      爆款新季与口碑剧集精选。
+                    </p>
+                  </div>
                   <Link
                     href='/douban?type=tv'
-                    className='flex items-center text-sm text-white/70 hover:text-white'
+                    className='flex items-center text-sm text-white/70 hover:text-white focus-ring rounded-full px-2 py-1'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -277,19 +296,19 @@ function HomeClient() {
                       Array.from({ length: 8 }).map((_, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[110px] w-28 sm:min-w-[200px] sm:w-48'
                         >
-                          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-200 animate-pulse dark:bg-gray-800'>
-                            <div className='absolute inset-0 bg-gray-300 dark:bg-gray-700'></div>
+                          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-2xl bg-white/5 animate-pulse'>
+                            <div className='absolute inset-0 bg-white/10'></div>
                           </div>
-                          <div className='mt-2 h-4 bg-gray-200 rounded animate-pulse dark:bg-gray-800'></div>
+                          <div className='mt-3 h-4 bg-white/10 rounded animate-pulse'></div>
                         </div>
                       ))
                     : // 显示真实数据
                       hotTvShows.map((show, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[110px] w-28 sm:min-w-[200px] sm:w-48'
                         >
                           <VideoCard
                             from='douban'
@@ -305,12 +324,19 @@ function HomeClient() {
               </section>
 
               {/* 热门综艺 */}
-              <section className='glass-panel rounded-3xl p-4 sm:p-6 border border-white/10'>
-                <div className='mb-4 flex items-center justify-between'>
-                  <h2 className='text-xl font-semibold text-white'>热门综艺</h2>
+              <section className='surface-panel rounded-[28px] p-5 sm:p-7'>
+                <div className='mb-5 flex items-center justify-between'>
+                  <div>
+                    <h2 className='text-2xl font-semibold text-white'>
+                      热门综艺
+                    </h2>
+                    <p className='text-sm text-white/60 mt-1'>
+                      轻松解压的综艺与热门真人秀。
+                    </p>
+                  </div>
                   <Link
                     href='/douban?type=show'
-                    className='flex items-center text-sm text-white/70 hover:text-white'
+                    className='flex items-center text-sm text-white/70 hover:text-white focus-ring rounded-full px-2 py-1'
                   >
                     查看更多
                     <ChevronRight className='w-4 h-4 ml-1' />
@@ -322,19 +348,19 @@ function HomeClient() {
                       Array.from({ length: 8 }).map((_, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[110px] w-28 sm:min-w-[200px] sm:w-48'
                         >
-                          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-200 animate-pulse dark:bg-gray-800'>
-                            <div className='absolute inset-0 bg-gray-300 dark:bg-gray-700'></div>
+                          <div className='relative aspect-[2/3] w-full overflow-hidden rounded-2xl bg-white/5 animate-pulse'>
+                            <div className='absolute inset-0 bg-white/10'></div>
                           </div>
-                          <div className='mt-2 h-4 bg-gray-200 rounded animate-pulse dark:bg-gray-800'></div>
+                          <div className='mt-3 h-4 bg-white/10 rounded animate-pulse'></div>
                         </div>
                       ))
                     : // 显示真实数据
                       hotVarietyShows.map((show, index) => (
                         <div
                           key={index}
-                          className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
+                          className='min-w-[110px] w-28 sm:min-w-[200px] sm:w-48'
                         >
                           <VideoCard
                             from='douban'
@@ -358,7 +384,7 @@ function HomeClient() {
             showAnnouncement ? '' : 'opacity-0 pointer-events-none'
           }`}
         >
-          <div className='w-full max-w-md rounded-3xl bg-white/10 backdrop-blur-2xl p-6 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] border border-white/10'>
+          <div className='w-full max-w-md rounded-[28px] bg-[#141721]/90 backdrop-blur-2xl p-7 shadow-[0_40px_90px_-45px_rgba(0,0,0,0.85)] border border-white/10'>
             <div className='flex justify-between items-start mb-4'>
               <h3 className='text-2xl font-semibold tracking-tight text-white'>
                 提示
@@ -374,7 +400,7 @@ function HomeClient() {
             </div>
             <button
               onClick={() => handleCloseAnnouncement(announcement)}
-              className='w-full rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-white font-medium shadow-[0_20px_40px_-25px_rgba(255,47,95,0.9)] transition-transform duration-300 hover:-translate-y-0.5'
+              className='w-full rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-white font-semibold shadow-[0_20px_40px_-25px_rgba(255,47,95,0.9)] transition-transform duration-300 hover:-translate-y-0.5 focus-ring'
             >
               我知道了
             </button>

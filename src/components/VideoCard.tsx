@@ -261,25 +261,25 @@ export default function VideoCard({
 
   return (
     <div
-      className='group relative w-full cursor-pointer overflow-hidden rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_25px_50px_-30px_rgba(0,0,0,0.75)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]'
+      className='group relative w-full cursor-pointer overflow-hidden rounded-[28px] bg-[#141721]/85 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-32px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_35px_80px_-35px_rgba(0,0,0,0.9)]'
       onClick={handleClick}
     >
-      <div className='relative aspect-[2/3] overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800/50 via-slate-900/40 to-black'>
+      <div className='relative aspect-[2/3] overflow-hidden rounded-[24px] bg-gradient-to-br from-slate-800/60 via-slate-900/60 to-black'>
         {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
         <Image
           src={processImageUrl(actualPoster)}
           alt={actualTitle}
           fill
-          className='object-cover transition duration-500 ease-out scale-105 group-hover:scale-110 group-hover:saturate-125'
+          className='object-cover transition duration-500 ease-out scale-105 group-hover:scale-110 group-hover:saturate-110'
           referrerPolicy='no-referrer'
           onLoadingComplete={() => setIsLoading(true)}
         />
 
-        <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent' />
 
         {config.showPlayButton && (
           <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-            <div className='h-14 w-14 rounded-full bg-white/15 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-[0_20px_40px_-25px_rgba(0,0,0,0.8)]'>
+            <div className='h-14 w-14 rounded-full bg-white/15 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-[0_20px_40px_-25px_rgba(0,0,0,0.85)]'>
               <Play size={28} className='text-white drop-shadow' />
             </div>
           </div>
@@ -292,7 +292,7 @@ export default function VideoCard({
         )}
 
         {actualEpisodes && actualEpisodes > 1 && (
-          <div className='absolute top-3 left-3 rounded-full bg-white/15 backdrop-blur-xl text-[10px] font-semibold uppercase tracking-[0.08em] text-white px-3 py-1 border border-white/20'>
+          <div className='absolute top-3 left-3 rounded-full bg-white/15 backdrop-blur-xl text-[10px] font-semibold uppercase tracking-[0.08em] text-white px-3 py-1 border border-white/25'>
             EP{' '}
             {currentEpisode
               ? `${currentEpisode}/${actualEpisodes}`
@@ -301,7 +301,7 @@ export default function VideoCard({
         )}
 
         <div className='absolute bottom-0 right-0 left-0 p-3 flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-          <div className='flex items-center gap-3 rounded-full bg-black/40 backdrop-blur-xl px-3 py-2 border border-white/10'>
+          <div className='flex items-center gap-3 rounded-full bg-black/45 backdrop-blur-xl px-3 py-2 border border-white/15'>
             {config.showCheckCircle && (
               <CheckSquare
                 onClick={handleDeleteRecord}
@@ -354,7 +354,7 @@ export default function VideoCard({
             {actualTitle}
           </span>
           {actualYear && (
-            <span className='text-[11px] text-white/50 rounded-full bg-white/5 px-2 py-1 border border-white/10 leading-none'>
+            <span className='text-[11px] text-white/55 rounded-full bg-white/10 px-2 py-1 border border-white/10 leading-none'>
               {actualYear}
             </span>
           )}
@@ -363,7 +363,7 @@ export default function VideoCard({
           <div className='flex justify-between items-center text-xs text-white/60'>
             <span className='uppercase tracking-[0.12em]'>{source_name}</span>
             {actualSearchType && (
-              <span className='px-2 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] tracking-widest'>
+              <span className='px-2 py-1 rounded-full bg-white/10 border border-white/10 text-[10px] tracking-widest'>
                 {actualSearchType === 'tv' ? 'Series' : 'Movie'}
               </span>
             )}
